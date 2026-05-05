@@ -1,0 +1,296 @@
+{
+    "@context": {
+        "@language": "en",
+        "@vocab": "https://schema.org/",
+        "arrayShape": "cr:arrayShape",
+        "citeAs": "cr:citeAs",
+        "column": "cr:column",
+        "conformsTo": "dct:conformsTo",
+        "containedIn": "cr:containedIn",
+        "cr": "http://mlcommons.org/croissant/",
+        "data": {
+            "@id": "cr:data",
+            "@type": "@json"
+        },
+        "dataBiases": "cr:dataBiases",
+        "dataCollection": "cr:dataCollection",
+        "dataType": {
+            "@id": "cr:dataType",
+            "@type": "@vocab"
+        },
+        "dct": "http://purl.org/dc/terms/",
+        "extract": "cr:extract",
+        "field": "cr:field",
+        "fileProperty": "cr:fileProperty",
+        "fileObject": "cr:fileObject",
+        "fileSet": "cr:fileSet",
+        "format": "cr:format",
+        "includes": "cr:includes",
+        "isArray": "cr:isArray",
+        "isLiveDataset": "cr:isLiveDataset",
+        "jsonPath": "cr:jsonPath",
+        "key": "cr:key",
+        "md5": "cr:md5",
+        "parentField": "cr:parentField",
+        "path": "cr:path",
+        "personalSensitiveInformation": "cr:personalSensitiveInformation",
+        "recordSet": "cr:recordSet",
+        "references": "cr:references",
+        "regex": "cr:regex",
+        "repeated": "cr:repeated",
+        "replace": "cr:replace",
+        "sc": "https://schema.org/",
+        "separator": "cr:separator",
+        "source": "cr:source",
+        "subField": "cr:subField",
+        "transform": "cr:transform"
+    },
+    "@type": "sc:Dataset",
+    "distribution": [
+        {
+            "@type": "cr:FileObject",
+            "@id": "repo",
+            "name": "repo",
+            "description": "The Hugging Face git repository.",
+            "contentUrl": "https://huggingface.co/datasets/AI-TAX/gapq-pl-dataset/tree/refs%2Fconvert%2Fparquet",
+            "encodingFormat": "git+https",
+            "sha256": "https://github.com/mlcommons/croissant/issues/80"
+        },
+        {
+            "@type": "cr:FileSet",
+            "@id": "parquet-files-for-config-default",
+            "containedIn": {
+                "@id": "repo"
+            },
+            "encodingFormat": "application/x-parquet",
+            "includes": "default/*/*.parquet"
+        }
+    ],
+    "recordSet": [
+        {
+            "@type": "cr:RecordSet",
+            "dataType": "cr:Split",
+            "key": {
+                "@id": "default_splits/split_name"
+            },
+            "@id": "default_splits",
+            "name": "default_splits",
+            "description": "Splits for the default config.",
+            "field": [
+                {
+                    "@type": "cr:Field",
+                    "@id": "default_splits/split_name",
+                    "dataType": "sc:Text"
+                }
+            ],
+            "data": [
+                {
+                    "default_splits/split_name": "extended"
+                },
+                {
+                    "default_splits/split_name": "verified"
+                }
+            ]
+        },
+        {
+            "@type": "cr:RecordSet",
+            "@id": "default",
+            "description": "AI-TAX/gapq-pl-dataset - 'default' subset\n\nAdditional information:\n- 2 splits: extended, verified",
+            "field": [
+                {
+                    "@type": "cr:Field",
+                    "@id": "default/split",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "parquet-files-for-config-default"
+                        },
+                        "extract": {
+                            "fileProperty": "fullpath"
+                        },
+                        "transform": {
+                            "regex": "default/(?:partial-)?(extended|verified)/.+parquet$"
+                        }
+                    },
+                    "references": {
+                        "field": {
+                            "@id": "default_splits/split_name"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "default/doc_id",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "parquet-files-for-config-default"
+                        },
+                        "extract": {
+                            "column": "doc_id"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "default/publication_date",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "parquet-files-for-config-default"
+                        },
+                        "extract": {
+                            "column": "publication_date"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "default/questions",
+                    "subField": [
+                        {
+                            "@type": "cr:Field",
+                            "@id": "default/questions/text",
+                            "dataType": "sc:Text",
+                            "source": {
+                                "fileSet": {
+                                    "@id": "parquet-files-for-config-default"
+                                },
+                                "extract": {
+                                    "column": "questions"
+                                },
+                                "transform": {
+                                    "jsonPath": "text"
+                                }
+                            }
+                        },
+                        {
+                            "@type": "cr:Field",
+                            "@id": "default/questions/context",
+                            "dataType": "sc:Text",
+                            "source": {
+                                "fileSet": {
+                                    "@id": "parquet-files-for-config-default"
+                                },
+                                "extract": {
+                                    "column": "questions"
+                                },
+                                "transform": {
+                                    "jsonPath": "context"
+                                }
+                            }
+                        }
+                    ],
+                    "isArray": true,
+                    "arrayShape": "-1"
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "default/generated_questions",
+                    "subField": [
+                        {
+                            "@type": "cr:Field",
+                            "@id": "default/generated_questions/text_0",
+                            "dataType": "sc:Text",
+                            "source": {
+                                "fileSet": {
+                                    "@id": "parquet-files-for-config-default"
+                                },
+                                "extract": {
+                                    "column": "generated_questions"
+                                },
+                                "transform": {
+                                    "jsonPath": "text"
+                                }
+                            }
+                        },
+                        {
+                            "@type": "cr:Field",
+                            "@id": "default/generated_questions/context_0",
+                            "dataType": "sc:Text",
+                            "source": {
+                                "fileSet": {
+                                    "@id": "parquet-files-for-config-default"
+                                },
+                                "extract": {
+                                    "column": "generated_questions"
+                                },
+                                "transform": {
+                                    "jsonPath": "context"
+                                }
+                            }
+                        }
+                    ],
+                    "isArray": true,
+                    "arrayShape": "-1"
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "default/tax_interpretation_questions",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "parquet-files-for-config-default"
+                        },
+                        "extract": {
+                            "column": "tax_interpretation_questions"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "default/supplementary_section",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "parquet-files-for-config-default"
+                        },
+                        "extract": {
+                            "column": "supplementary_section"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "default/factual_state",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "parquet-files-for-config-default"
+                        },
+                        "extract": {
+                            "column": "factual_state"
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "conformsTo": "http://mlcommons.org/croissant/1.1",
+    "name": "gapq-pl-dataset",
+    "description": "\n\t\n\t\t\n\t\tGapQ-PL \u2014 Question Generation for Gaps in Polish Tax Interpretations\n\t\n\nCompanion dataset for the paper:\n\nGapQ: Question Generation for Gaps in Polish Tax Interpretations\n\nGapQ-PL is a corpus of Polish KIS (Krajowa Informacja Skarbowa)\ntax-interpretation requests paired with the supplementary clarification\nquestions a tax officer would ask to fill the factual gaps in the\napplicant's submission. The benchmark task is: given the applicant's\nfactual state and original interpretation\u2026 See the full description on the dataset page: https://huggingface.co/datasets/AI-TAX/gapq-pl-dataset.",
+    "alternateName": [
+        "AI-TAX/gapq-pl-dataset"
+    ],
+    "creator": {
+        "@type": "Organization",
+        "name": "AI Tax Advisor",
+        "url": "https://huggingface.co/AI-TAX"
+    },
+    "keywords": [
+        "question-answering",
+        "text-generation",
+        "Polish",
+        "cc-by-4.0",
+        "1K - 10K",
+        "parquet",
+        "Text",
+        "Datasets",
+        "pandas",
+        "Polars",
+        "Croissant",
+        "\ud83c\uddfa\ud83c\uddf8 Region: US"
+    ],
+    "license": "https://choosealicense.com/licenses/cc-by-4.0/",
+    "url": "https://huggingface.co/datasets/AI-TAX/gapq-pl-dataset"
+}
