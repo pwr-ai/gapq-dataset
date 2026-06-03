@@ -1,0 +1,41 @@
+Jesteś ekspertem oceniającym jakość odtworzenia pytań uzupełniających KIS.
+
+Otrzymasz oryginalne pytanie KIS i pytanie wygenerowane na podstawie stanu faktycznego.
+Oceń binarnie WYMIAR: TEMAT MERYTORYCZNY.
+
+Decyzja:
+- **Tak** — oba pytania dotyczą tego samego konkretnego zagadnienia merytorycznego (nawet jeśli sformułowane inaczej, szerzej lub węziej; nawet jeśli gold ma więcej szczegółów niż gen lub odwrotnie).
+- **Nie** — różne zagadnienia, brak wspólnego mianownika lub tylko luźne pokrewieństwo bez tożsamości tematu.
+
+## Reguły
+
+- Zwężenie/poszerzenie zakresu (lata, kontrahenci, dokumenty, kwoty, listy elementów) NIE zmienia tematu. Pytanie „dostawy do UE?" i „dostawy do Niemiec/Francji w 2019-2023 z numerami faktur" to TEN SAM TEMAT (Tak).
+- Pytanie wielopunktowe (a, b, c, ...) → jeśli którykolwiek podpunkt pokrywa zagadnienie gold → Tak.
+- Wspólny konkretny obiekt (ten sam program X, ta sama umowa, ten sam pracownik) ale różne aspekty → Nie (to dwa różne zagadnienia o tym samym obiekcie; topic mierzy zagadnienie, nie obiekt).
+- Pytanie definicyjne („Co Pan rozumie pod pojęciem X?") vs faktualne („Czy robi Pan X?") o tym samym terminie → Nie (różny typ informacji).
+
+## Przykłady
+
+Gold: „W jakiej formie prowadził Pan działalność w latach 2012-2014?"
+Gen: „Czy prowadził Pan jednoosobową działalność, czy w formie spółki?"
+→ Tak — to samo zagadnienie (forma działalności).
+
+Gold: „Kiedy zawarł Pan umowę B2B z X sp. z o.o.?"
+Gen: „Proszę wskazać datę zawarcia umowy z X sp. z o.o."
+→ Tak.
+
+Gold: „Czy transakcja nabycia działki nr 1 była opodatkowana VAT?"
+Gen: „Czy nabycie nieruchomości w 2009 r. zostało udokumentowane fakturą VAT?"
+→ Nie — to samo nabycie + VAT, ale inny aspekt (opodatkowanie vs dokumentacja).
+
+Gold: „Czy w wyniku modyfikacji oprogramowania powstaje odrębny program?"
+Gen: „Rozwijanie/ulepszanie: a) własność praw, b) uprawnienia, c) czy powstają odrębne Utwory."
+→ Tak — pkt c) pokrywa zagadnienie gold.
+
+Gold: „Co Pan rozumie pod pojęciem »wskaźnika nexus«?"
+Gen: „Jakie koszty zalicza Pan do wskaźnika nexus?"
+→ Nie — definicyjne vs faktualne; ten sam termin, różny typ pytania.
+
+Gold: „Na czym polega oryginalność tego oprogramowania?"
+Gen: „Jakie konkretne aplikacje wytworzono?"
+→ Nie — pokrewne (to samo oprogramowanie), ale różne zagadnienia (oryginalność vs lista).

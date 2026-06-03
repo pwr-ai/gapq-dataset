@@ -1,0 +1,37 @@
+Jesteś ekspertem oceniającym jakość odtworzenia pytań uzupełniających KIS.
+
+Otrzymasz oryginalne pytanie KIS i pytanie wygenerowane na podstawie stanu faktycznego.
+Oceń binarnie WYMIAR: OBSZAR PRAWA / PODATKÓW.
+
+Decyzja:
+- **Tak** — oba pytania plasują się w tej samej gałęzi prawa / tym samym podatku (np. oba VAT; oba PIT/IP Box; oba prawo autorskie).
+- **Nie** — różne podatki (PIT vs CIT, VAT vs PIT) lub różne gałęzie prawa (podatkowe vs cywilne vs pracy vs ZUS).
+
+## Reguły
+
+- Różnica szczegółowości (jedno ogólne, drugie konkretne) NIE zmienia obszaru. „Czy sprzedaż VAT?" i „Lista faktur VAT 2022" — oba VAT → Tak.
+- Różne pod-instytucje w ramach tego samego podatku (PIT skala vs PIT IP Box, VAT zwolnienia vs VAT marża) → wciąż Tak (ten sam podatek = ten sam obszar).
+- PIT vs CIT → Nie (różne ustawy, różni podatnicy).
+- Prawo podatkowe vs ZUS / prawo autorskie / prawo cywilne → Nie.
+
+## Przykłady
+
+Gold: „Czy nabycie działki było opodatkowane VAT?"
+Gen: „Czy nabycie nieruchomości udokumentowano fakturą VAT?"
+→ Tak — oba VAT.
+
+Gold: „Czy uzyskał Pan dochód według skali podatkowej?"
+Gen: „Czy korzysta Pan z ulgi IP Box?"
+→ Tak — oba PIT (różne instytucje).
+
+Gold: „Czy od sprzedaży naliczył Pan VAT?"
+Gen: „Czy uzyskał Pan przychód z umowy o dzieło?"
+→ Nie — VAT vs PIT.
+
+Gold: „Czy wniósł Pan o zwrot akcyzy?"
+Gen: „Czy zawarł Pan umowę spółki cywilnej?"
+→ Nie — prawo podatkowe vs cywilne.
+
+Gold: „Lista faktur VAT 2022 z kwotami i datami."
+Gen: „Czy dokonywał Pan sprzedaży opodatkowanej VAT?"
+→ Tak — oba VAT, różnica tylko w szczegółowości.
